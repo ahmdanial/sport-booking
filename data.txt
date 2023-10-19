@@ -1,0 +1,41 @@
+studid,studname,studcourse,phone
+BCS2111-022,Ahmad Danial,DCS,0105579878
+BBS2111-022,Izfar Haikal,DBS,0190768332
+BLH2101-053,Ahmad Safi,DLH,0154673234
+BCS2101-014,Danish Hakim,DCS,0190978332
+
+itemcode,itemname,quantity
+A001,Soccer Ball,5
+A002,Racket,3
+A003,Rugby Ball,2
+A004,Bow,4
+
+id,startdate,enddate,itemcode_id,studid_id
+1,2023-05-01,2023-05-03,A001,BCS2111-022
+2,2023-04-21,2023-04-22,A003,BBS2111-022
+3,2023-04-05,2023-04-10,A004,BCS2101-014
+
+class Student(models.Model):
+    studid= models.CharField(max_length=12, primary_key = True)
+    studname= models.TextField(max_length=100)
+    studcourse= models.TextField(max_length=150)
+    phone= models.CharField(max_length=12)
+
+class Item(models.Model):
+    itemcode= models.CharField(max_length=12, primary_key=True)
+    itemname= models.TextField(max_length=100)
+    quantity= models.IntegerField(default=10)
+
+class ItemImages(models.Model):
+    item= models.ForeignKey(Item ,related_name="images", on_delete=models.CASCADE)
+    images = models.ImageField(upload_to="items")
+
+class Staff(models.Model):
+    staffid= models.CharField(max_length=8, primary_key=True)
+    staffname= models.TextField(max_length=100)
+
+class Booking(models.Model):
+    studid=models.ForeignKey(Student, on_delete=models.CASCADE)
+    itemcode=models.ForeignKey(Item, on_delete=models.CASCADE)
+    startdate=models.DateField()
+    enddate=models.DateField()

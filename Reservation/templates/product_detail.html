@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", intial-
+    scale="1.0">
+    <title>Products Details - Dani.Co</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+
+
+<body>
+<div id="blur"></div>
+    <div class="container" >
+        <div class="navbar">
+            <div class="logo">
+                <img src="{% static "Reservation/images/logo.png" %}" width="100px">
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'product' %}">Product</a></li>
+                    <li><a href="logo.html">About</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a href="{% url 'login' %}">Log Out</a></li>
+                </ul>
+            </nav>
+            <a href="{% url 'cart' %}"><img src="{% static "Reservation/images/cart.png" %}" width="30px" height="30px"></a>
+            <img src="{% static "Reservation/images/menu.png" %}" class="menu-icon" onclick="menutoggle()">
+        </div>
+    </div>
+    
+    <!----------- single product details ------->
+{% block content %}
+    {% for x in item %}
+        <div class="small-container single-product">
+            <div class="row" id="blur">
+                <div class="col-2">
+                    <img src="/media/{{x.image}}" width="100%" id="ProductImg">
+
+                    <div class="small-img-row">
+                        <div class="small-img-col">
+                            <img src="/media/{{x.image2}}" %}" width="100%" class="small-img">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="/media/{{x.image}}" %}" width="100%" class="small-img">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="/media/{{x.image3}}" %}" width="100%" class="small-img">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="/media/{{x.image4}}" %}" width="100%" class="small-img">
+                        </div>
+                    </div>
+
+                </div>    
+                <div class="col-2">
+                    <p>Home / Equipment </p>
+                    <h1>{{ x.itemname }}</h1>
+                    
+                    <form action="product_detail" method = "post">
+                        {% csrf_token %}
+                        
+                        <label>
+                          Item Code:
+                          <input type="text" name="itemcode" value="{{x.itemcode}}"/>
+                        </label>
+                        
+
+                        <label>
+                          Start Date:
+                          <input type="date" name="startdate" placeholder=""/>
+                        </label>
+
+                        <label>
+                            Date End:
+                            <input type="date" name="enddate"/>
+                          </label>
+
+                        <label>
+                            Quantity:
+                        <input class="quantity" type="number"  name="quantity">
+                        </label>
+
+                          <input type="submit" class="btn-book" onclick="openPopup()" value="Add to booking">
+                     
+                    
+                    </form>
+                    
+                    
+
+                    <h3>Product Details <i class="fa fa-indent"></i></h3>
+                    <br>
+                    <p>An essential piece of equipment used in the sport of hockey. It is a long, 
+                        slender stick made of lightweight materials such as graphite, aluminum, or a combination of both, and is used by players to move the 
+                        puck around the ice surface and shoot it into the opposing team's net.</p>
+
+                    <div class="popup" id="popup"> 
+                        <img src="{% static "Reservation/images/tick.png" %}">
+                        <h2> Thank You!</h2>
+                        <p> Your items has booked. Thanks!</p>
+                        <button type="button" onclick="closePopup()">OK</button>
+                    </div>
+                    <script>
+                        let popup=document.getElementById("popup");
+                        let blur=document.getElementById("blur");
+                        function openPopup(){
+                            popup.classList.add("open-popup")
+                            blur.classList.add("popup-screen")
+                        }
+                        function closePopup(){
+                            popup.classList.remove("open-popup")
+                            blur.classList.remove("popup-screen")
+                        }
+
+                        
+                    </script>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+{% endblock %}
+        
+
+    <!---------title----------->
+        <div class="small-container">
+            <div class="row row-2">
+                <h2>Additional Item</h2>
+                <p>View More</p>
+
+            </div>
+        </div>
+
+    
+    <!---------product---------->
+            <div class="small-container">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{% static "Reservation/images/product11.png" %}">
+                        <h4>Soccer Ball</h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <p>RM50.00</p>
+                    </div>
+                    <div class="col-4">
+                        <img src="{% static "Reservation/images/product2.jpeg" %}">
+                        <h4>Badminton Racket</h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <p>RM80.00</p>
+                    </div>
+                    <div class="col-4">
+                        <img src="{% static "Reservation/images/product-3.png" %}">
+                        <h4>Basketball</h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                        </div>
+                        <p>RM45.00</p>
+                    </div>
+                    <div class="col-4">
+                        <img src="{% static "Reservation/images/product-4.jpeg" %}">
+                        <h4>Recurve Bow</h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <p>RM55.00</p>
+                    </div>
+                </div>
+            </div>
+
+
+     
+
+    <!--------footer------------>
+    <div class="footer">
+        <div class="contain">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p> Download App for Android and IOS mobile phone.</p>
+                    <div class="app-logo">
+                        <img src="{% static "Reservation/images/play-store.png" %}">
+                        <img src="{% static "Reservation/images/app-store.png" %}">
+                    </div>
+                </div>
+                <div class="footer-col-2">
+                    <img src="{% static "Reservation/images/logo.png" %}">
+                    <p> Our purpose is to sustainably make the pleasure and benefits 
+                    of sports accessible to the many.</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog Post</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>Youtube</li>
+                    </ul>
+                </div>
+            </div>  
+            <hr>
+            <p class="copyright">Copyright 2022 - Ahmad Danial </p> 
+        </div> 
+    </div>
+ <!---------js for toggle menu----------->     
+        <script>
+            var MenuItems = document.getElementById("MenuItems");
+            MenuItems.style.maxHeight="0px"
+            function menutoggle(){
+                if(MenuItems.style.maxHeight=="0px")
+                    {
+                        MenuItems.style.maxHeight="200px"
+                    }
+                else
+                    {
+                        MenuItems.style.maxHeight="0px"
+                    }
+            }
+        </script>
+
+<!---------js for product gallery----------->
+
+        <script>
+            var ProductImg = document.getElementById("ProductImg");
+            var SmallImg = document.getElementsByClassName("small-img");
+
+                SmallImg[0].onmouseover = function()
+                {
+                    ProductImg.src = SmallImg[0].src;
+                }
+                SmallImg[1].onmouseover = function()
+                {
+                    ProductImg.src = SmallImg[1].src;
+                }
+                SmallImg[2].onmouseover = function()
+                {
+                    ProductImg.src = SmallImg[2].src;
+                }
+                SmallImg[3].onmouseover = function()
+                {
+                    ProductImg.src = SmallImg[3].src;
+                }
+        </script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", intial-
+    scale="1.0">
+    <title>Home | Dani.Co</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mouseee@{version}/lib/index.js" type="module"></script>
+     
+</head>
+
+<body onload="initClock()">
+
+    <div class="hero">
+        <video autoplay loop muted plays-inline class="back-video">
+             <source src="{% static "Reservation/images/video2.mp4" %}" type="video/mp4">
+        </video>
+
+    <!---------logo----------->
+        <div class="container">
+            <div class="homebar">
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="{% url 'index' %}">{% load static %} <img src="{% static "Reservation/images/logo.png" %}" width="100px"></a></li>
+                    </ul>
+                </nav>
+
+    <!--------navigation bar----------->
+    <div class="menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="side-bar">
+        <div class="close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="menu">
+          <div class="item"><a href="{% url 'index' %}"><i class="fas fa-home"></i>Home</a></div>
+          <div class="item">
+            <a class="sub-btn"><i class="fa-solid fa-futbol"></i>Item<i class="fas fa-angle-right dropdown"></i></a>
+            <div class="sub-menu">
+              <a href="{% url 'product' %}" class="sub-item">All Item</a>
+            </div>
+          </div>
+          <div class="item">
+            <a class="sub-btn"><i class="fas fa-address-book"></i>Contact<i class="fas fa-angle-right dropdown"></i></a>
+            <div class="sub-menu">
+              <a href="#" class="sub-item">Email</a>
+              <a href="#" class="sub-item">Address</a>
+            </div>
+          </div>
+          <div class="item"><a href="{% url 'cart' %}"><i class="fa-solid fa-bookmark"></i>Booking</a></div>
+          <div class="item"><a href="{% url 'login' %}"><i class="fas fa-user"></i>Logout</a></div>
+        </div>
+      </div>
+      
+   
+      <script type="text/javascript">
+      $(document).ready(function(){
+        //jquery for toggle sub menus
+        $('.sub-btn').click(function(){
+          $(this).next('.sub-menu').slideToggle();
+          $(this).find('.dropdown').toggleClass('rotate');
+        });
+   
+        //jquery for expand and collapse the sidebar
+        $('.menu-btn').click(function(){
+          $('.side-bar').addClass('active');
+          $('.menu-btn').css("visibility", "hidden");
+        });
+   
+        $('.close-btn').click(function(){
+          $('.side-bar').removeClass('active');
+          $('.menu-btn').css("visibility", "visible");
+        });
+      });
+      </script>
+
+    <!-----digital clock start----->
+        </div>
+        <br>
+        <br>
+        <div>
+        <div class="datetime">
+            <div class="date">
+              <span id="dayname">Day</span>,
+              <span id="month">Month</span>
+              <span id="daynum">00</span>,
+              <span id="year">Year</span>
+            </div>
+            <div class="time">
+              <span id="hour">00</span>:
+              <span id="minutes">00</span>:
+              <span id="seconds">00</span>
+              <span id="period">AM</span>
+            </div>
+          </div>
+
+          <!-----digital clock end----->
+      
+          <script type="text/javascript">
+          function updateClock(){
+            var now = new Date();
+            var dname = now.getDay(),
+                mo = now.getMonth(),
+                dnum = now.getDate(),
+                yr = now.getFullYear(),
+                hou = now.getHours(),
+                min = now.getMinutes(),
+                sec = now.getSeconds(),
+                pe = "AM";
+      
+                if(hou >= 12){
+                  pe = "PM";
+                }
+                if(hou == 0){
+                  hou = 12;
+                }
+                if(hou > 12){
+                  hou = hou - 12;
+                }
+      
+                Number.prototype.pad = function(digits){
+                  for(var n = this.toString(); n.length < digits; n = 0 + n);
+                  return n;
+                }
+      
+                var months = ["January", "February", "March", "April", "May", "June", "July", "Augest", "September", "October", "November", "December"];
+                var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var ids = ["dayname", "month", "daynum", "year", "hour", "minutes", "seconds", "period"];
+                var values = [week[dname], months[mo], dnum.pad(2), yr, hou.pad(2), min.pad(2), sec.pad(2), pe];
+                for(var i = 0; i < ids.length; i++)
+                document.getElementById(ids[i]).firstChild.nodeValue = values[i];
+          }
+      
+          function initClock(){
+            updateClock();
+            window.setInterval("updateClock()", 1);
+          }
+          </script>
+          </div>
+        
+          <!--------title------------->
+        <div class="row">
+            <div class="col-home">
+                <h1>Welcome to KPMB sports equipment borrowing website!</h1>
+                <p>"Get ready for your next game or workout with our top-quality sports equipment. We offer a wide variety of gear for different sports, including basketball, soccer, football, and more." 
+                    </p>
+                    <a href="" class="btn">Explore Now &#8594;</a>
+
+            </div>
+            <div class="col-2">
+                {% load static %} <img src="{% static "Reservation/images/image1.png" %}">
+            </div>
+        </div>
+    </div>   
+    </div>
+    
+    <!---------- featured categories ----------->
+        <div class="categories">
+            <div class="small-container">
+                <div class="row">
+                    <div class="col-3">
+                        {% load static %} <img src="{% static "Reservation/images/category1.jpg" %}">
+                    </div>
+                    <div class="col-3">
+                        {% load static %} <img src="{% static "Reservation/images/category2.jpg" %}">
+                    </div>
+                    <div class="col-3">
+                        {% load static %} <img src="{% static "Reservation/images/category3.jpg" %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+    <!----------- featured product ------------>
+        
+            <div class="small-container">
+                <h2 class="title">Featured Products</h2>  
+                <div class="row"> 
+                    {% block content %}
+                    {% for x in item|slice:"0:4" %}  
+                    <div class="col-4">
+                         
+                        <a href="{% url 'product_detail' x.slug %}"><img src="/media/{{x.image}}"></a>
+                        <a href="{% url 'product_detail' x.slug %}"><h4>{{ x.itemname }}</h4></a>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <p>{{x.itemstatus}}</p>
+                        
+                    </div>
+                    {% endfor %}
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                    
+                    
+    <!-------------Latest Product-------------->
+            <div class="small-container">
+                <h2 class="title">Latest Products</h2>
+                <div class="row">
+                    {% for x in item|slice:"4:12"%}
+                    <div class="col-4">
+                        <a href="{% url 'product_detail' x.slug %}"><img src="/media/{{x.image}}"></a>
+                        <a href="{% url 'product_detail' x.slug %}"><h4>{{ x.itemname }}</h4></a>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <p>{{x.itemstatus}}</p>
+                        
+                    </div>
+                {% endfor %}
+                {% endblock content %}
+                </div>
+                </div>
+                </div>
+
+                
+            
+    <!----------offer------------>
+
+    <div class="offer" style="background-image: url(' {%static 'Reservation/images/black.jpeg'%}');">
+        <div class="small-container">
+             <div class="row">
+                     <div class="col-2">
+                     {% load static %} <img src="{% static "Reservation/images/exclusiv.png" %}" class="offer-img zoom">
+                 </div>
+                 <div class="off">
+                        <h1 id="para" class="jtp">ONLY IN KPMB GYMNASIUM</h1>
+                       <small><b>Weightlifting Machine</b> designed to help users build strength and muscle mass by providing resistance training for various muscle groups. 
+                        These machines use a combination of pulleys, cables, weights, and levers to create resistance and enable users to perform a variety of weightlifting exercises.<br></small>
+                        <a href="" class="btn" >Buy Now &#8594;</a> 
+                  </div>
+                </div>
+            </div> 
+     </div>
+
+    <!----------testimonial------------>
+    <div class="testimonial">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-3">
+                    <i class="fa fa-quote-left"></i>
+                    <p>I absolutely love this sports equipment booking system! It's so easy to use and makes renting equipment a breeze.
+                         I appreciate that I can see availability in real-time and make a reservation instantly.  </p>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        {% load static %} <img src="{% static "Reservation/images/user-1.png" %}">
+                        <h3>Lily</h3>
+                    </div>
+                    <div class="col-3">
+                        <i class="fa fa-quote-left"></i>
+                        <p>I've been using this sports equipment booking system for a few months now and I'm really impressed with it.
+                             The platform is very intuitive and I was able to start using it right away without any issues.</p>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                            {% load static %} <img src="{% static "Reservation/images/user-2.png" %}">
+                            <h3>Mark</h3>
+                        </div>
+                        <div class="col-3">
+                            <i class="fa fa-quote-left"></i>
+                            <p>I recently used this sports equipment booking system for the first time and I have to say, I was impressed. 
+                                The process was very straightforward and I appreciated the detailed information provided about each piece of equipment. </p>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                {% load static %} <img src="{% static "Reservation/images/user-3.png" %}">
+                                <h3>Mary</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <!--------footer------------>
+    <div class="footer">
+        <div class="contain">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p> Download App for Android and IOS mobile phone.</p>
+                    <div class="app-logo">
+                        {% load static %} <img src="{% static "Reservation/images/play-store.png" %}">
+                        {% load static %} <img src="{% static "Reservation/images/app-store.png" %}">
+                    </div>
+                </div>
+                <div class="footer-col-2">
+                    {% load static %} <img src="{% static "Reservation/images/logo.png" %}">
+                    <p> Our purpose is to sustainably make the pleasure and benefits 
+                    of sports accessible to the many.</p>
+                    
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog Post</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>Youtube</li>
+                    </ul>
+                </div>
+            </div>  
+            <hr>
+            <p class="copyright">Copyright 2022 - Ahmad Danial </p> 
+        </div> 
+    </div>
+ <!---------js for toggle menu----------->     
+        <script>
+            var MenuItems = document.getElementById("MenuItems");
+            MenuItems.style.maxHeight="0px"
+            function menutoggle(){
+                if(MenuItems.style.maxHeight=="0px")
+                    {
+                        MenuItems.style.maxHeight="200px"
+                    }
+                else
+                    {
+                        MenuItems.style.maxHeight="0px"
+                    }
+            }
+        </script>
+
+    <!---------js for offer--------->
+    <script>
+        function fun() {
+            document.getElementById("para").removeAttribute("class");
+        }
+        function openfun() {
+            document.getElementById("para").setAttribute("class","jtp");
+        }
+    </script>
+    <!--------------mouse trails------------->
+     <script>
+        const mouseeeConfig = {
+            color: "#ff523b",
+            size: 20,
+            trailColor: "#ff523b",
+            trailTime: 300
+        }
+        
+        </script>
+
+        
+</body>
+</html>
