@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ysy7fx8$s*g%wwmxc47&b94t#2fjd4c^y45no-nbo*gr_4mw5r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['sport-booking.onrender.com']
 
 
 # Application definition
