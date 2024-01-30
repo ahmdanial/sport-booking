@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'Reservation'
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +51,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  
 ]
 
 ROOT_URLCONF = 'sport_booking.urls'
