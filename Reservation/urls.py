@@ -5,10 +5,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("",views.outindex, name="out_index"),
     path("login",views.LoginPage, name="login"),
     path("signup",views.SignupPage, name="signup"),
     path("update_password",views.update_password, name="update_password"),
-    path("",views.outindex, name="out_index"),
     path("index",views.index, name ="index"),
     path("product",views.product, name ="product"),
     path("product_detail/<slug:slug>",views.product_detail, name ="product_detail"),
