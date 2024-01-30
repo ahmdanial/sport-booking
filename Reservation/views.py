@@ -94,6 +94,13 @@ def outindex(request):
             'item' : item,
             'uid' : uid,
             }
+    else:
+        # If uid is not present in session, set context without uid
+        item=Item.objects.all()    
+        context= {
+            'item' : item,
+            }
+
     return render (request,"out_index.html",context)
 
 def product(request):
