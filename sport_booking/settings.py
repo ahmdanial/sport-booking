@@ -14,10 +14,12 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
+from django.contrib.messages import constants as messages_constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 env = environ.Env()
 environ.Env.read_env()
@@ -29,10 +31,9 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-ysy7fx8$s*g%wwmxc47&b94t#2fjd4c^y45no-nbo*gr_4mw5r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -46,21 +47,14 @@ INSTALLED_APPS = [
     'Reservation'
 ]
 
-MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', 
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'sport_booking.urls'
@@ -76,30 +70,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
             ],
-        },
-    },
+        }
+    }
 ]
 
 WSGI_APPLICATION = 'sport_booking.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}'''
-
-# Render PostgreSQL database (Live)
-
 DATABASES = {
-
     'default': dj_database_url.parse(env('DATABASE_URL'))
-
 }
 
 # Password validation
@@ -120,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -136,28 +118,14 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-TATIC_ROOT = 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-STATIC_URL = 'static/'
-STATICFILES_DIR = {
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR , "Reservation/static")
-}
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
-MEDIA_URL = '/media/'
-
