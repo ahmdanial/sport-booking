@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
-from django.contrib.messages import constants as messages_constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +30,7 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-ysy7fx8$s*g%wwmxc47&b94t#2fjd4c^y45no-nbo*gr_4mw5r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True')=="True"
 
 ALLOWED_HOSTS = ['*']
 
@@ -49,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,9 +81,21 @@ WSGI_APPLICATION = 'sport_booking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
+if not DEBUG:
+    DATABASES = {
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -121,11 +133,15 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/'assets'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_DIRS = [BASE_DIR/'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR/'media'
+
+MEDIAFILES_STORAGE = "whitenoise.storage.CompressedManifestMediaFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
