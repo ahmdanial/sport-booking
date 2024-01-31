@@ -26,7 +26,7 @@ def SignupPage(request):
                     return render(request , 'login.html')
                 
         else:
-            return HttpResponse ("Password must be same !!")
+            return HttpResponse ("Get ID from admin first!!")
     return render(request , 'signup.html')
 
 def LoginPage(request):
