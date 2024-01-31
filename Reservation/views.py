@@ -26,7 +26,7 @@ def SignupPage(request):
                     return render(request , 'login.html')
                 
         else:
-            return HttpResponse ("Get ID from admin first!!")
+            return HttpResponse ("Get ID from admin first !!. User View=('ID:U001, Password:user@123')")
     return render(request , 'signup.html')
 
 def LoginPage(request):
